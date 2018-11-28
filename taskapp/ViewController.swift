@@ -98,8 +98,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         // Cellに値を設定する.indexPathで何番目のセルなのかを管理
         let task = taskArray[indexPath.row]
-        cell.textLabel?.text = task.title
-        cell.textLabel?.text = task.category
+        let titelecategory:String = "title:\(task.title)  category：\(task.category)"
+        //cell.textLabel?.text = task.title
+        cell.textLabel?.text = titelecategory
         
         // Description: DateFormatter()関数を格納している変数.各cellに記述する内容の呼び出しに使用する
         let formatter = DateFormatter()
