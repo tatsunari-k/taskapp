@@ -48,7 +48,7 @@ class InputViewController: UIViewController {
         print ("動作チェック_input_02")
     }
     
-    //関数定義。
+    //ToDo:処理内容不明。要確認
     //UNMutableNotificationContentクラスのインスタンスを使って通知内容を設定
     // タスクのローカル通知を登録する
     func setNotification(task: Task) {

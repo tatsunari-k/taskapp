@@ -1,6 +1,6 @@
 import UIKit
 import Foundation
-import RealmSwift   // ←追加
+import RealmSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -8,6 +8,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let realm = try! Realm()  // Realmインスタンスを取得する
     var searchBar: UISearchBar!
     var searchBarUserText: String!      //ユーザーがserchbar利用時に検索に使用した言葉
+    
+    
+    //var categoryArray: [String] = 
+    //配列内に、作成したカテゴリの数だけ、文字列を格納
+    //配列内をユーザーの入力した文字を使用してソートを実行
+    ////必要な変数
+    //作成されてるカテゴリの数
+    //categoryArray:　各カテゴリ名を格納する変数　配列管理
+    //
+    
+    
     
     // DB内のタスクが格納されるリスト。
     // 日付近い順\順でソート：降順
@@ -46,13 +57,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             inputViewController.task = task
         }
         print ("動作チェック_画面遷移メイン→タスク詳細")
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    //////////////////////////////////////////////////////////
     //////////// MARK: UISearchBarプロトコルのメソッド////////////
+    //////////////////////////////////////////////////////////
     func setupSearchBar() {
         if let navigationBarFrame = navigationController?.navigationBar.bounds {
             let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
@@ -79,19 +93,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
-    //
+    //文字が入力されるたびに文字情報を格納して管理する
    func searchBar(_ searchBar: UISearchBar,textDidChange searchText: String){
         searchBarUserText = searchText
         print ("動作チェック_検索バーテキスト\(searchBarUserText)")
+        //taskArray = realm.objects(Task.self).filter("category == %@", searchBarUserText)
+        taskArray = realm.objects(Task.self).filter("category == name CONTAINS[c] '%@'", searchBarUserText)
+        print ("taskArray",taskArray)
+    
+        // 文字列で検索条件を指定します
+        //var tanDogs = realm.objects(Dog).filter("color = 'tan' AND name BEGINSWITH 'B'")
+        //taskArray = try! Realm().objects(Task).filter("category == %@", text)
+        tableView.reloadData()//tableViewを更新
     }
     
+    ///////////////////////////////////////////////////////////////////
     ////////////MARK: UITableViewDataSourceプロトコルのメソッド////////////
+    ///////////////////////////////////////////////////////////////////
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print ("動作チェック_データ数（＝セルの数）のチェックする関数")
-        return taskArray.count  // ←追加する
-        
+        print (taskArray.count)
+        return taskArray.count
+
     }
+    
+    //ToDo:処理内容不明。要確認DateFormatter
     // 各セルの内容を返すメソッド
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 再利用可能な cell を得る
@@ -113,8 +140,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //セル内に記入したカテゴリーの表示
         //let categoryString:String = formatter.string(from: task.category)
         //cell.Categorytitle?.text = categoryString
-        
-        print ("動作チェック_各セル内の値を設定し引数として渡す関数");
+        print ("動作チェック_各セル内の値を設定し引数として渡す関数")
         
         return cell
     }
@@ -133,7 +159,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // Delete ボタンが押された時に呼ばれるメソッド
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // データベースから削除する  // ←以降追加する
+            // データベースから削除する
             try! realm.write {
                 self.realm.delete(self.taskArray[indexPath.row])
                 tableView.deleteRows(at: [indexPath], with: .fade)
