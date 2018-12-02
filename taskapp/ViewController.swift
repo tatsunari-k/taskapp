@@ -9,17 +9,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var searchBar: UISearchBar!
     var searchBarUserText: String!      //ユーザーがserchbar利用時に検索に使用した言葉
     
-    
-    //var categoryArray: [String] = 
-    //配列内に、作成したカテゴリの数だけ、文字列を格納
-    //配列内をユーザーの入力した文字を使用してソートを実行
-    ////必要な変数
-    //作成されてるカテゴリの数
-    //categoryArray:　各カテゴリ名を格納する変数　配列管理
-    //
-    
-    
-    
     // DB内のタスクが格納されるリスト。
     // 日付近い順\順でソート：降順
     // 以降内容をアップデートするとリスト内は自動的に更新される。
@@ -57,7 +46,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             inputViewController.task = task
         }
         print ("動作チェック_画面遷移メイン→タスク詳細")
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,18 +80,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
+        self.view.endEditing(true)
+        searchBar.text = ""
+        taskArray = try! Realm().objects(Task.self)
+        self.tableView.reloadData()
+        
     }
     //文字が入力されるたびに文字情報を格納して管理する
    func searchBar(_ searchBar: UISearchBar,textDidChange searchText: String){
         searchBarUserText = searchText
         print ("動作チェック_検索バーテキスト\(searchBarUserText)")
         //taskArray = realm.objects(Task.self).filter("category == %@", searchBarUserText)
-        taskArray = realm.objects(Task.self).filter("category == name CONTAINS[c] '%@'", searchBarUserText)
+        taskArray = realm.objects(Task.self).filter("category == %@ OR category CONTAINS[c] %@", searchBarUserText, searchBarUserText)
         print ("taskArray",taskArray)
-    
-        // 文字列で検索条件を指定します
-        //var tanDogs = realm.objects(Dog).filter("color = 'tan' AND name BEGINSWITH 'B'")
-        //taskArray = try! Realm().objects(Task).filter("category == %@", text)
         tableView.reloadData()//tableViewを更新
     }
     
@@ -115,7 +104,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print ("動作チェック_データ数（＝セルの数）のチェックする関数")
         print (taskArray.count)
         return taskArray.count
-
     }
     
     //ToDo:処理内容不明。要確認DateFormatter
@@ -166,7 +154,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         print ("動作チェック_07")
-
     }
 }
 
