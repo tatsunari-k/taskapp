@@ -14,7 +14,6 @@
 		8D264A46219F15290098DC6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D264A44219F15290098DC6D /* LaunchScreen.storyboard */; };
 		8D4093B921A5736E00E8720F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4093B821A5736E00E8720F /* Task.swift */; };
 		8DC35E4721A184D000398699 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC35E4621A184D000398699 /* InputViewController.swift */; };
-		8DD9E37821AAD1DC00FC0FF4 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD9E37721AAD1DB00FC0FF4 /* SearchView.swift */; };
 		B15422ED85E0FFCF015B3028 /* Pods_taskapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C23FFDAD1A183F94731E13A /* Pods_taskapp.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		8D264A47219F15290098DC6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D4093B821A5736E00E8720F /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		8DC35E4621A184D000398699 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
-		8DD9E37721AAD1DB00FC0FF4 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = "/Users/tatsunari/Documents/ドキュメント/12.iOSapp study/taskapp/taskapp/SearchView.swift"; sourceTree = "<absolute>"; };
 		E8EF3A00728777CCCF7F36D9 /* Pods-taskapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taskapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-taskapp/Pods-taskapp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +82,6 @@
 				8D264A44219F15290098DC6D /* LaunchScreen.storyboard */,
 				8D264A47219F15290098DC6D /* Info.plist */,
 				8DC35E4621A184D000398699 /* InputViewController.swift */,
-				8DD9E37721AAD1DB00FC0FF4 /* SearchView.swift */,
 			);
 			path = taskapp;
 			sourceTree = "<group>";
@@ -224,7 +221,6 @@
 				8DC35E4721A184D000398699 /* InputViewController.swift in Sources */,
 				8D264A3E219F15290098DC6D /* ViewController.swift in Sources */,
 				8D264A3C219F15290098DC6D /* AppDelegate.swift in Sources */,
-				8DD9E37821AAD1DC00FC0FF4 /* SearchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

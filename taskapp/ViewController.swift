@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         tableView.delegate = self
         tableView.dataSource = self
         setupSearchBar()
@@ -38,7 +38,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             let task = Task()
             task.date = Date()
-            
             let allTasks = realm.objects(Task.self)
             if allTasks.count != 0 {
                 task.id = allTasks.max(ofProperty: "id")! + 1
@@ -59,7 +58,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let navigationBarFrame = navigationController?.navigationBar.bounds {
             let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
             searchBar.delegate = self
-            searchBar.placeholder = "タイトルで探す"
+            searchBar.placeholder = "カテゴリで探す"
             searchBar.tintColor = UIColor.gray
             searchBar.keyboardType = UIKeyboardType.default
             navigationItem.titleView = searchBar
@@ -82,7 +81,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBar.resignFirstResponder()
         self.view.endEditing(true)
         searchBar.text = ""
-        taskArray = try! Realm().objects(Task.self)
+        print ("searchBarSearchButtonClicked")
+        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
         self.tableView.reloadData()
         
     }
@@ -91,10 +91,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBarUserText = searchText
         print ("動作チェック_検索バーテキスト\(searchBarUserText)")
         //taskArray = realm.objects(Task.self).filter("category == %@", searchBarUserText)
-        taskArray = realm.objects(Task.self).filter("category == %@ OR category CONTAINS[c] %@", searchBarUserText, searchBarUserText)
+        if searchBarUserText != nil {
+        taskArray = realm.objects(Task.self).filter("category CONTAINS[c] %@", searchBarUserText, searchBarUserText)
         print ("taskArray",taskArray)
+        }else if searchBarUserText.isEmpty{
+        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+        }
         tableView.reloadData()//tableViewを更新
     }
+    
     
     ///////////////////////////////////////////////////////////////////
     ////////////MARK: UITableViewDataSourceプロトコルのメソッド////////////
